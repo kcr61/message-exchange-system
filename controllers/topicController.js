@@ -1,6 +1,6 @@
 const Topic = require('../models/topic');
 const User = require('../models/user');
-const { Observer } = require('../observer');
+const { Observer } = require('../utils/observer');
 
 const topicObserver = new Observer();
 

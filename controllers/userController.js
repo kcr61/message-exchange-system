@@ -1,5 +1,5 @@
 const User = require('../models/user');
-const { Subscriber } = require('../observer');
+const { Subscriber } = require('../utils/observer');
 
 exports.registerUser = async (req, res) => {
     app.post('/register', async (req, res) => {

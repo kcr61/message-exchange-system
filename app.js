@@ -22,9 +22,9 @@ app.set('view engine', 'ejs');
 
 // Set up MongoDB connection
 mongoose.connect(uri, {
-   try {
+
       const conn = await mongoose.connect(process.env.MONGO_URI);
-    }
+   
 })
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));

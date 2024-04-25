@@ -1,6 +1,6 @@
 const Message = require('../models/message');
 const Topic = require('../models/topic');
-const { topicObserver } = require('../observer');
+const { topicObserver } = require('../utils/observer');
 
 exports.postMessage = async (req, res) => {
     try {

@@ -72,4 +72,6 @@ app.get('/login', (req, res) => {
 app.get('/register', (req, res) => {
     res.render('register');
 });
+
+// Export the app instance
 module.exports = app;

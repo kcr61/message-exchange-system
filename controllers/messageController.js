@@ -1,3 +1,4 @@
+const app = require('../app'); 
 const Message = require('../models/message');
 const Topic = require('../models/topic');
 const { topicObserver } = require('../utils/observer');

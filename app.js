@@ -53,6 +53,17 @@ app.get('/', async (req, res) => {
         console.error(err);
         res.status(500).send('Error loading home page');
     }
+
+    app.get('/login', (req, res) => {
+        const error = req.query.error;
+        res.render('login', { error });
+    });
+
+    // Register route
+    app.get('/register', (req, res) => {
+        res.render('register');
+    });
+
 });
 
 app.listen(port, () => console.log(`Server started at http://localhost:${port}`));

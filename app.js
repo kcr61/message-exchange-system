@@ -8,9 +8,6 @@ const cookieParser = require('cookie-parser');
 const User = require('./models/user');
 const Topic = require('./models/topic');
 const Message = require('./models/message');
-const userController = require('./controllers/userController');
-const topicController = require('./controllers/topicController');
-const messageController = require('./controllers/messageController');
 const { Observer, Subscriber } = require('./utils/observer');
 
 const topicObserver = new Observer();
@@ -25,19 +22,15 @@ mongoose.connect(uri, {})
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error('MongoDB connection error:', err));
 
-app.listen(port, () => console.log(`Server started at http://localhost:${port}`));
+// Import the route handlers
+const userRoutes = require('./routes/userRoutes');
+const topicRoutes = require('./routes/topicRoutes');
+const messageRoutes = require('./routes/messageRoutes');
 
-// User authentication routes
-app.post('/register', userController.registerUser);
-app.post('/login', userController.loginUser);
-
-// Topic management routes
-app.post('/create-topic', topicController.createTopic);
-app.get('/subscribe/:topicId', topicController.subscribeTopic);
-app.get('/unsubscribe/:topicId', topicController.unsubscribeTopic);
-
-// Message posting route
-app.post('/post-message', messageController.postMessage);
+// Use the route handlers
+app.use('/users', userRoutes);
+app.use('/topics', topicRoutes);
+app.use('/messages', messageRoutes);
 
 // Home route
 app.get('/', async (req, res) => {
@@ -62,16 +55,4 @@ app.get('/', async (req, res) => {
     }
 });
 
-// Login route
-app.get('/login', (req, res) => {
-    const error = req.query.error;
-    res.render('login', { error });
-});
-
-// Register route
-app.get('/register', (req, res) => {
-    res.render('register');
-});
-
-// Export the app instance
-module.exports = app;
+app.listen(port, () => console.log(`Server started at http://localhost:${port}`));

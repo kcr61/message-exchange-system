@@ -5,7 +5,6 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const cookieParser = require('cookie-parser');
-const userController = require('./controllers/userController');
 const User = require('./models/user');
 const Topic = require('./models/topic');
 const Message = require('./models/message');

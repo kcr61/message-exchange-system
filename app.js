@@ -22,12 +22,10 @@ app.set('view engine', 'ejs');
 
 // Set up MongoDB connection
 mongoose.connect(uri, {
-
-      const conn = await mongoose.connect(process.env.MONGO_URI);
-   
+    useUnifiedTopology: true
 })
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error('MongoDB connection error:', err));
+    .then(() => console.log('MongoDB connected'))
+    .catch(err => console.error('MongoDB connection error:', err));
 
 app.listen(port, () => console.log(`Server started at http://localhost:${port}`));
 
@@ -45,34 +43,34 @@ app.post('/post-message', messageController.postMessage);
 
 // Home route
 app.get('/', async (req, res) => {
-  try {
-    const authToken = req.cookies.authToken;
-    if (authToken) {
-      const user = await User.findOne({ userId: authToken }).populate('subscribedTopics');
-      const subscribedTopics = user.subscribedTopics.map(topic => ({
-        ...topic.toObject(),
-        messages: topic.messages.slice(-2)
-      }));
+    try {
+        const authToken = req.cookies.authToken;
+        if (authToken) {
+            const user = await User.findOne({ userId: authToken }).populate('subscribedTopics');
+            const subscribedTopics = user.subscribedTopics.map(topic => ({
+                ...topic.toObject(),
+                messages: topic.messages.slice(-2)
+            }));
 
-      const availableTopics = await Topic.find({ _id: { $nin: user.subscribedTopics } });
+            const availableTopics = await Topic.find({ _id: { $nin: user.subscribedTopics } });
 
-      res.render('index', { subscribedTopics, availableTopics });
-    } else {
-      res.redirect('/login');
+            res.render('index', { subscribedTopics, availableTopics });
+        } else {
+            res.redirect('/login');
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error loading home page');
     }
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Error loading home page');
-  }
 });
 
 // Login route
 app.get('/login', (req, res) => {
-  const error = req.query.error;
-  res.render('login', { error });
+    const error = req.query.error;
+    res.render('login', { error });
 });
 
 // Register route
 app.get('/register', (req, res) => {
-  res.render('register');
+    res.render('register');
 });

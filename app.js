@@ -16,6 +16,7 @@ const topicObserver = new Observer();
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(userController);
 app.set('view engine', 'ejs');
 
 // Set up MongoDB connection

@@ -21,9 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
 // Set up MongoDB connection
-mongoose.connect(uri, {
-  useUnifiedTopology: true
-})
+mongoose.connect(uri, {})
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
 

@@ -1,33 +1,31 @@
+// observer.js
 class Observer {
     constructor() {
-        this.observers = [];
+      this.subscribers = [];
     }
-
-    subscribe(observer) {
-        this.observers.push(observer);
+  
+    subscribe(subscriber) {
+      this.subscribers.push(subscriber);
     }
-
-    unsubscribe(observer) {
-        this.observers = this.observers.filter(obs => obs !== observer);
+  
+    unsubscribe(subscriber) {
+      this.subscribers = this.subscribers.filter(sub => sub !== subscriber);
     }
-
+  
     notify(message) {
-        this.observers.forEach(observer => observer.update(message));
+      this.subscribers.forEach(subscriber => subscriber.update(message));
     }
-}
-
-class Subscriber {
+  }
+  
+  class Subscriber {
     constructor(userId) {
-        this.userId = userId;
+      this.userId = userId;
     }
-
+  
     update(message) {
-        console.log(`User ${this.userId} received message: ${message}`);
-        // You can add logic here to notify the user or update the UI
+      console.log(`User ${this.userId} received: ${message}`);
+      // You can add additional logic here, e.g., sending notifications or emails
     }
-}
-
-module.exports = {
-    Observer,
-    Subscriber
-};
+  }
+  
+  module.exports = { Observer, Subscriber };

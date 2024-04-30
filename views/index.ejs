@@ -9,7 +9,7 @@
     <h3>Recent Messages</h3>
     <ul>
       <% topic.messages.slice(-2).forEach(message => { %>
-      <li><%= message.content %> (Posted by <%= message.userId %>)</li>
+        <li><%= message.content %> (Posted by <%= message.user.userId %>)</li>
       <% }) %>
     </ul>
   </li>
@@ -27,13 +27,13 @@
 </ul>
 
 <h2>Create New Topic</h2>
-<form action="/create-topic" method="POST">
+<form action="/topics/create-topic" method="POST">
   <input type="text" name="name" placeholder="Topic Name" required />
   <button type="submit">Create Topic</button>
 </form>
 
 <h2>Post Message</h2>
-<form action="/post-message" method="POST">
+<form action="/messpost-message" method="POST">
   <select name="topicId" required>
     <% subscribedTopics.forEach(topic => { %>
     <option value="<%= topic._id %>"><%= topic.name %></option>

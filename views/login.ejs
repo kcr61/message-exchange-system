@@ -5,10 +5,7 @@
 </head>
 <body>
   <h1>Login</h1>
-  <% if (error) { %>
-    <p style="color: red;"><%= error %></p>
-  <% } %>
-  <form action="/login" method="POST">
+  <form action="/users/login" method="POST">
     <label for="userId">User ID:</label>
     <input type="text" id="userId" name="userId" required>
     <br>

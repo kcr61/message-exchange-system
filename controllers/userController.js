@@ -3,22 +3,25 @@ const User = require('../models/user');
 const { Subscriber } = require('../utils/observer');
 
 exports.registerUser = async (req, res) => {
-  app.post('/register', async (req, res) => {
-    try {
-      await client.connect();
-      const database = client.db(dbName);
-      const collection = database.collection(collectionName);
-      const { userId, password } = req.body;
-      const result = await collection.insertOne({ userId, password });
-      console.log(`Inserted document: ${result.insertedId}`);
-      res.redirect('/');
-    } catch (err) {
-      console.error(err);
-      res.status(500).send('Error registering user');
-    } finally {
-      await client.close();
+  try {
+    const { userId, password } = req.body;
+
+    // Check if the user already exists
+    const existingUser = await User.findOne({ userId });
+    if (existingUser) {
+      return res.status(400).json({ error: 'User ID already exists' });
     }
-  });
+
+    // Create a new user
+    const newUser = new User({ userId, password });
+    await newUser.save();
+
+    // You can optionally set a cookie or return a success message
+    res.status(201).json({ message: 'User registered successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 };
 
 exports.loginUser = async (req, res) => {

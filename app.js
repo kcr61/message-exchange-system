@@ -10,6 +10,16 @@ const Topic = require('./models/topic');
 const Message = require('./models/message');
 const { Observer, Subscriber } = require('./utils/observer');
 
+// Import the route handlers
+const userRoutes = require('./routes/userRoutes');
+const topicRoutes = require('./routes/topicRoutes');
+const messageRoutes = require('./routes/messageRoutes');
+
+// Use the route handlers
+app.use('/users', userRoutes);
+app.use('/topics', topicRoutes);
+app.use('/messages', messageRoutes);
+
 const topicObserver = new Observer();
 
 app.use(cookieParser());
@@ -21,16 +31,6 @@ app.set('view engine', 'ejs');
 mongoose.connect(uri, {})
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error('MongoDB connection error:', err));
-
-// Import the route handlers
-const userRoutes = require('./routes/userRoutes');
-const topicRoutes = require('./routes/topicRoutes');
-const messageRoutes = require('./routes/messageRoutes');
-
-// Use the route handlers
-app.use('/users', userRoutes);
-app.use('/topics', topicRoutes);
-app.use('/messages', messageRoutes);
 
 // Home route
 app.get('/', async (req, res) => {

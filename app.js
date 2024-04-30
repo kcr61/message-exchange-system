@@ -10,6 +10,13 @@ const Topic = require('./models/topic');
 const Message = require('./models/message');
 const { Observer, Subscriber } = require('./utils/observer');
 
+const topicObserver = new Observer();
+
+app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.set('view engine', 'ejs');
+
 // Import the route handlers
 const userRoutes = require('./routes/userRoutes');
 const topicRoutes = require('./routes/topicRoutes');
@@ -19,13 +26,6 @@ const messageRoutes = require('./routes/messageRoutes');
 app.use('/users', userRoutes);
 app.use('/topics', topicRoutes);
 app.use('/messages', messageRoutes);
-
-const topicObserver = new Observer();
-
-app.use(cookieParser());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.set('view engine', 'ejs');
 
 // Set up MongoDB connection
 mongoose.connect(uri, {})

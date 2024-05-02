@@ -7,7 +7,6 @@ const port = 3000;
 const cookieParser = require('cookie-parser');
 const User = require('./models/user');
 const Topic = require('./models/topic');
-const Message = require('./models/message');
 const { Observer, Subscriber } = require('./utils/observer');
 
 const topicObserver = new Observer();
@@ -20,12 +19,10 @@ app.set('view engine', 'ejs');
 // Import the route handlers
 const userRoutes = require('./routes/userRoutes');
 const topicRoutes = require('./routes/topicRoutes');
-const messageRoutes = require('./routes/messageRoutes');
 
 // Use the route handlers
 app.use('/users', userRoutes);
 app.use('/topics', topicRoutes);
-app.use('/messages', messageRoutes);
 
 // Set up MongoDB connection
 mongoose.connect(uri, {})
